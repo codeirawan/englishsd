@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnglishKids 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4ff;
+  --ink:#1a1f4a;
+  --muted:#5a6080;
+  --card:#fff;
+  --border:#d4daf0;
+  --blue:#3b6ef8;
+  --blue-lt:#e8eeff;
+  --green:#22c97a;
+  --green-lt:#e0faf0;
+  --red:#f05060;
+  --red-lt:#feeaec;
+  --yellow:#f9c820;
+  --yellow-lt:#fff9e0;
+  --purple:#9b5cf8;
+  --purple-lt:#f0e8ff;
+  --orange:#f97316;
+  --orange-lt:#fff0e4;
+  --shadow:0 6px 30px rgba(26,31,74,.10);
+  --shadow-sm:0 2px 12px rgba(26,31,74,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* stars bg */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(circle,rgba(59,110,248,.07) 1px,transparent 1px),
+    radial-gradient(circle,rgba(155,92,248,.05) 1px,transparent 1px);
+  background-size:32px 32px, 56px 56px;
+  background-position:0 0, 16px 16px;
+}
+
+.wrap{max-width:700px;margin:0 auto;padding:24px 16px;position:relative;z-index:1;}
+
+/* ── Header ── */
+header{text-align:center;margin-bottom:26px;}
+.logo{font-family:'Fredoka One',cursive;font-size:2.6rem;letter-spacing:.5px;line-height:1.1;}
+.logo .en{color:var(--blue);}
+.logo .kids{color:var(--purple);}
+.logo-tag{
+  display:inline-block;margin-top:6px;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  color:#fff;font-size:.72rem;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:3px 16px;border-radius:20px;
+}
+
+/* ── Level tabs ── */
+.levels{display:flex;gap:6px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;}
+.lv{
+  padding:7px 16px;border-radius:30px;border:2.5px solid var(--border);
+  background:var(--card);color:var(--muted);
+  cursor:pointer;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;
+  transition:all .15s;box-shadow:var(--shadow-sm);
+}
+.lv:hover,.lv.active{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.lv.l1.active,.lv.l1:hover{background:var(--green-lt);border-color:var(--green);color:#0f7a48;}
+.lv.l2.active,.lv.l2:hover{background:var(--blue-lt);border-color:var(--blue);color:var(--blue);}
+.lv.l3.active,.lv.l3:hover{background:var(--purple-lt);border-color:var(--purple);color:var(--purple);}
+.lv.all.active,.lv.all:hover{background:var(--yellow-lt);border-color:var(--yellow);color:#a07800;}
+
+/* ── Kategori ── */
+.cats{display:flex;gap:6px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+.cat{
+  padding:6px 13px;border-radius:8px;border:2px solid var(--border);
+  background:var(--card);color:var(--muted);
+  cursor:pointer;font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:800;
+  transition:all .13s;
+}
+.cat:hover,.cat.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+
+/* ── Scorebar ── */
+.scorebar{
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--card);border:2.5px solid var(--border);
+  border-radius:18px;padding:12px 20px;margin-bottom:18px;
+  box-shadow:var(--shadow-sm);
+}
+.sc-item{text-align:center;}
+.sc-val{font-family:'Fredoka One',cursive;font-size:1.7rem;}
+.sc-lbl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:800;}
+.sc-val.g{color:var(--green);}.sc-val.r{color:var(--red);}.sc-val.o{color:var(--orange);}.sc-val.b{color:var(--blue);}
+
+/* ── Progress ── */
+.prog-wrap{background:var(--border);border-radius:99px;height:9px;margin-bottom:18px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:99px;transition:width .4s cubic-bezier(.34,1.56,.64,1);}
+
+/* ── Question card ── */
+.q-card{
+  background:var(--card);border:2.5px solid var(--border);
+  border-radius:24px;padding:26px 22px;margin-bottom:14px;
+  box-shadow:var(--shadow);
+  animation:popIn .32s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn{from{opacity:0;transform:scale(.92) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.q-cat-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.72rem;font-weight:800;padding:4px 12px;border-radius:20px;
+}
+.q-badges{display:flex;gap:6px;align-items:center;}
+.q-type-tag{font-size:.68rem;font-weight:800;padding:3px 9px;border-radius:6px;border:1.5px solid;}
+.tag-pg{border-color:var(--blue);color:var(--blue);background:var(--blue-lt);}
+.tag-is{border-color:var(--purple);color:var(--purple);background:var(--purple-lt);}
+.lv-tag{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:6px;}
+.lv-tag.lv1{background:var(--green-lt);color:#0f7a48;}
+.lv-tag.lv2{background:var(--blue-lt);color:var(--blue);}
+.lv-tag.lv3{background:var(--purple-lt);color:var(--purple);}
+
+/* Visual/emoji display */
+.q-visual{text-align:center;font-size:3.8rem;margin:10px 0 6px;animation:wiggle 2.5s ease-in-out infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.q-visual.big{font-size:2.8rem;line-height:1.4;}
+
+.q-text{
+  font-size:1.1rem;font-weight:800;color:var(--ink);
+  line-height:1.6;text-align:center;
+}
+.q-text .word{
+  display:inline-block;background:var(--blue-lt);
+  color:var(--blue);border-bottom:2.5px solid var(--blue);
+  padding:1px 6px;border-radius:5px;font-style:italic;
+  margin:0 2px;
+}
+.q-text .blank{
+  display:inline-block;
+  background:var(--yellow-lt);border-bottom:2.5px dashed var(--yellow);
+  min-width:70px;padding:1px 8px;border-radius:5px;
+  color:var(--muted);font-style:italic;margin:0 2px;
+}
+
+/* ── Options ── */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.opt{
+  background:var(--card);border:2.5px solid var(--border);
+  border-radius:14px;padding:13px 12px;
+  font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:800;
+  color:var(--ink);cursor:pointer;
+  transition:all .14s;line-height:1.35;
+  display:flex;align-items:center;gap:8px;
+}
+.opt-ltr{
+  width:26px;height:26px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:900;
+}
+.opt.oa{} .opt.oa .opt-ltr{background:var(--blue-lt);color:var(--blue);}
+.opt.ob .opt-ltr{background:var(--green-lt);color:#0f7a48;}
+.opt.oc .opt-ltr{background:var(--yellow-lt);color:#a07800;}
+.opt.od .opt-ltr{background:var(--purple-lt);color:var(--purple);}
+.opt:hover:not(.locked){transform:translateY(-2px);box-shadow:0 5px 16px rgba(59,110,248,.13);}
+.opt.oa:hover:not(.locked){border-color:var(--blue);background:var(--blue-lt);}
+.opt.ob:hover:not(.locked){border-color:var(--green);background:var(--green-lt);}
+.opt.oc:hover:not(.locked){border-color:var(--yellow);background:var(--yellow-lt);}
+.opt.od:hover:not(.locked){border-color:var(--purple);background:var(--purple-lt);}
+.opt.correct{border-color:var(--green)!important;background:var(--green-lt)!important;color:#0f7a48!important;}
+.opt.correct .opt-ltr{background:var(--green);color:#fff;}
+.opt.wrong{border-color:var(--red)!important;background:var(--red-lt)!important;color:var(--red)!important;}
+.opt.wrong .opt-ltr{background:var(--red);color:#fff;}
+.opt.locked{cursor:not-allowed;}
+
+/* ── Isian ── */
+.isian-wrap{margin-bottom:14px;}
+.isian-hint{font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-align:center;}
+.isian-row{display:flex;gap:8px;}
+.isian-row input{
+  flex:1;border:2.5px solid var(--border);border-radius:12px;
+  padding:13px 16px;font-family:'Nunito',sans-serif;
+  font-size:1.05rem;font-weight:800;color:var(--ink);
+  background:var(--card);outline:none;transition:border .14s;text-align:center;
+}
+.isian-row input:focus{border-color:var(--blue);}
+.isian-row input.correct{border-color:var(--green);color:#0f7a48;background:var(--green-lt);}
+.isian-row input.wrong{border-color:var(--red);color:var(--red);background:var(--red-lt);}
+.btn-cek{
+  background:var(--blue);color:#fff;border:none;
+  border-radius:12px;padding:13px 20px;
+  font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;
+  cursor:pointer;transition:all .14s;white-space:nowrap;
+}
+.btn-cek:hover{background:#2252d4;transform:scale(1.03);}
+.btn-cek:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+/* ── Feedback ── */
+.feedback{
+  font-size:.95rem;font-weight:800;padding:11px 14px;
+  border-radius:12px;margin-bottom:12px;opacity:0;transition:opacity .2s;text-align:center;
+}
+.feedback.show{opacity:1;}
+.feedback.ok{background:var(--green-lt);color:#0f7a48;border:1.5px solid #80dab0;}
+.feedback.err{background:var(--red-lt);color:var(--red);border:1.5px solid #f0b0b8;}
+
+/* ── Explain ── */
+.explain-box{
+  background:var(--yellow-lt);border:2px dashed var(--yellow);
+  border-radius:12px;padding:12px 14px;margin-top:10px;
+  font-size:.85rem;font-weight:700;color:#5a4800;
+  line-height:1.65;display:none;
+}
+.explain-box.show{display:block;}
+
+/* ── Nav ── */
+.nav-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.btn{
+  padding:9px 18px;border-radius:10px;border:2px solid var(--border);
+  background:var(--card);color:var(--ink);cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;
+  transition:all .13s;box-shadow:var(--shadow-sm);
+}
+.btn:hover{border-color:var(--blue);color:var(--blue);}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;}
+.btn.primary:hover{background:#2252d4;}
+
+/* ── Results ── */
+.results{
+  background:var(--card);border:2.5px solid var(--border);
+  border-radius:24px;padding:38px 24px;text-align:center;
+  box-shadow:var(--shadow);animation:popIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+.result-emoji{font-size:4rem;display:block;margin-bottom:8px;}
+.result-score{font-family:'Fredoka One',cursive;font-size:4.5rem;color:var(--blue);margin:4px 0;}
+.result-grade{font-size:1.25rem;font-weight:900;}
+.result-desc{color:var(--muted);font-size:.9rem;font-weight:700;margin:6px 0 22px;}
+.breakdown{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
+.bd{background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:10px 18px;text-align:center;}
+.bd-v{font-family:'Fredoka One',cursive;font-size:1.5rem;}
+.stars-row{display:flex;justify-content:center;gap:4px;font-size:2.2rem;margin:10px 0 16px;}
+
+/* ── Toast ── */
+.toast{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:999;
+  background:var(--blue);color:#fff;font-weight:900;
+  padding:9px 22px;border-radius:20px;font-size:.88rem;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+  font-family:'Nunito',sans-serif;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(59,110,248,.4);
+}
+.toast.show{opacity:1;}
+
+@media(max-width:480px){
+  .logo{font-size:2rem;}
+  .q-text{font-size:.98rem;}
+  .opt{font-size:.82rem;padding:11px 9px;}
+  .options{gap:7px;}
+}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+
+  <header>
+    <div class="logo"><span class="en">English</span><span class="kids">Kids</span> 🌟</div>
+    <div class="logo-tag">English Quiz · SD Level</div>
+  </header>
+
+  <div class="levels">
+    <button class="lv all active" onclick="setFilter('all','all',this)">🎲 All Levels</button>
+    <button class="lv l1" onclick="setFilter('level','1',this)">🟢 Beginner</button>
+    <button class="lv l2" onclick="setFilter('level','2',this)">🔵 Intermediate</button>
+    <button class="lv l3" onclick="setFilter('level','3',this)">🟣 Advanced</button>
+  </div>
+
+  <div class="cats">
+    <button class="cat active" onclick="setFilter('kat','semua',this)">📖 All Topics</button>
+    <button class="cat" onclick="setFilter('kat','vocab',this)">📝 Vocabulary</button>
+    <button class="cat" onclick="setFilter('kat','grammar',this)">📐 Grammar</button>
+    <button class="cat" onclick="setFilter('kat','reading',this)">👁️ Reading</button>
+    <button class="cat" onclick="setFilter('kat','daily',this)">💬 Daily English</button>
+  </div>
+
+  <div class="scorebar">
+    <div class="sc-item"><div class="sc-val g" id="sc-benar">0</div><div class="sc-lbl">Correct</div></div>
+    <div class="sc-item"><div class="sc-val r" id="sc-salah">0</div><div class="sc-lbl">Wrong</div></div>
+    <div class="sc-item"><div class="sc-val o" id="sc-streak">0🔥</div><div class="sc-lbl">Streak</div></div>
+    <div class="sc-item"><div class="sc-val b" id="sc-no">1/10</div><div class="sc-lbl">Question</div></div>
+  </div>
+
+  <div class="prog-wrap"><div class="prog-fill" id="progBar" style="width:10%"></div></div>
+  <div id="quiz-area"></div>
+</div>
+
+<script>
+/* Fisher-Yates shuffle */
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i];a[i]=a[j];a[j]=t;
+  }
+  return a;
+}
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+
+var SOAL=[
+  // ══ VOCABULARY - Beginner (lv1) ══
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'🍎',
+   q:'What is this? 🍎',
+   choices:['Apple','Orange','Banana','Mango'],ans:'Apple',
+   explain:'🍎 = <b>Apple</b> (apel). 🍊 = Orange (jeruk). 🍌 = Banana (pisang). 🥭 = Mango (mangga).'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'🐶🐱🐠🐢',
+   q:'Which one is a pet that lives in water?',
+   choices:['Fish','Dog','Cat','Turtle'],ans:'Fish',
+   explain:'<b>Fish</b> (ikan) lives in water. Dog (anjing), Cat (kucing) live on land. Turtle can live in both!'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'isian',visual:'🔴',
+   q:'What color is this? 🔴',
+   ans:'red',altAns:['Red'],
+   explain:'🔴 = <b>Red</b> (merah). Colors: Red, Blue, Green, Yellow, Orange, Purple, Pink, White, Black, Brown.'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'1️⃣2️⃣3️⃣',
+   q:'How do you say "tiga" in English?',
+   choices:['Three','Two','Four','Five'],ans:'Three',
+   explain:'Numbers: One (1), Two (2), <b>Three</b> (3), Four (4), Five (5), Six (6), Seven (7), Eight (8), Nine (9), Ten (10).'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'📅',
+   q:'What day comes after Monday?',
+   choices:['Tuesday','Sunday','Wednesday','Thursday'],ans:'Tuesday',
+   explain:'Days of the week: Sunday, <b>Monday → Tuesday</b>, Wednesday, Thursday, Friday, Saturday. Mon-Tue-Wed-Thu-Fri-Sat-Sun!'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'isian',visual:'🏠',
+   q:'What do we call the place where we live? (rumah in English)',
+   ans:'house',altAns:['home','a house','a home'],
+   explain:'<b>House</b> = rumah (the building). <b>Home</b> = rumah (the feeling of belonging). Both are correct!'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'😊😢😡😱',
+   q:'Which emoji shows a "happy" feeling?',
+   choices:['😊','😢','😡','😱'],ans:'😊',
+   explain:'😊 = <b>Happy</b> (senang). 😢 = Sad (sedih). 😡 = Angry (marah). 😱 = Scared (takut).'},
+
+  {kat:'vocab',lv:'1',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'👨‍👩‍👧‍👦',
+   q:'"Ibu" in English is...',
+   choices:['Mother','Father','Sister','Brother'],ans:'Mother',
+   explain:'Family words: Father (ayah), <b>Mother</b> (ibu), Brother (kakak/adik laki-laki), Sister (kakak/adik perempuan), Grandfather (kakek), Grandmother (nenek).'},
+
+  // ══ VOCABULARY - Intermediate (lv2) ══
+  {kat:'vocab',lv:'2',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🌤️🌧️❄️🌪️',
+   q:'What do we call the study of weather?',
+   choices:['Meteorology','Biology','Geology','Astronomy'],ans:'Meteorology',
+   explain:'<b>Meteorology</b> = ilmu cuaca. Biology = biologi. Geology = ilmu bumi/batuan. Astronomy = ilmu bintang/antariksa.'},
+
+  {kat:'vocab',lv:'2',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'isian',visual:'🔍',
+   q:'The opposite of "difficult" is...',
+   ans:'easy',altAns:['Easy','simple','Simple'],
+   explain:'Antonyms: difficult ↔ <b>easy</b>. Other antonyms: big ↔ small, fast ↔ slow, hot ↔ cold, dark ↔ bright.'},
+
+  {kat:'vocab',lv:'2',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🦁🐘🦒🐧',
+   q:'Which animal is known as the "King of the Jungle"?',
+   choices:['Lion','Elephant','Giraffe','Penguin'],ans:'Lion',
+   explain:'The <b>Lion</b> (singa) is called the King of the Jungle. Lion → male, Lioness → female, Cub → baby lion.'},
+
+  {kat:'vocab',lv:'2',cat:'📝 Vocabulary',catBg:'#e8eeff',catCl:'#3b6ef8',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🌍',
+   q:'What is the largest ocean in the world?',
+   choices:['Pacific Ocean','Atlantic Ocean','Indian Ocean','Arctic Ocean'],ans:'Pacific Ocean',
+   explain:'The <b>Pacific Ocean</b> is the largest (Samudra Pasifik). Atlantic (Atlantik), Indian (Hindia), Arctic (Arktik), Southern (Antartika).'},
+
+  // ══ GRAMMAR - Beginner (lv1) ══
+  {kat:'grammar',lv:'1',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'👦',
+   q:'Choose the correct sentence: "He ___ a student."',
+   choices:['is','are','am','be'],ans:'is',
+   explain:'<b>To Be</b> rules: I → <b>am</b>, He/She/It → <b>is</b>, You/We/They → <b>are</b>. "He is a student" ✓'},
+
+  {kat:'grammar',lv:'1',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'👧👦',
+   q:'"Saya dan kamu" in English is...',
+   choices:['You and I','Me and you','I and you','You and me'],ans:'You and I',
+   explain:'In formal English: always say <b>"You and I"</b>, not "Me and you". Rule: put the other person first, use "I" (not "me") as subject.'},
+
+  {kat:'grammar',lv:'1',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv1',lvLbl:'Beginner',
+   type:'isian',visual:'🐈',
+   q:'Make the word "cat" plural (lebih dari satu kucing):',
+   ans:'cats',altAns:['Cats'],
+   explain:'Regular plural: add <b>-s</b> → cat → <b>cats</b>. More rules: box → boxes (-es), baby → babies (-ies), child → children (irregular).'},
+
+  {kat:'grammar',lv:'1',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'🍕🍔🍣',
+   q:'"___ she like pizza?" (Does or Do?)',
+   choices:['Does','Do','Is','Are'],ans:'Does',
+   explain:'Question with <b>Does</b>: He/She/It → Does she like...? With <b>Do</b>: I/You/We/They → Do you like...? "Does" is used with he/she/it.'},
+
+  {kat:'grammar',lv:'2',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'📅',
+   q:'Which sentence uses the correct past tense?',
+   choices:['She went to school yesterday.','She go to school yesterday.','She goes to school yesterday.','She goed to school yesterday.'],ans:'She went to school yesterday.',
+   explain:'"go" is an <b>irregular verb</b>. Past tense of go → <b>went</b> (not "goed"). Other irregulars: eat→ate, run→ran, see→saw, come→came.'},
+
+  {kat:'grammar',lv:'2',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🔢',
+   q:'Which word is an adjective in: "The tall boy ran fast."?',
+   choices:['tall','boy','ran','fast'],ans:'tall',
+   explain:'<b>Adjective</b> = kata sifat, describes a noun. "The <b>tall</b> boy" — tall describes BOY. "fast" here is an adverb (modifies the verb "ran").'},
+
+  {kat:'grammar',lv:'2',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'isian',visual:'✏️',
+   q:'Fill in the blank: "I ___ reading a book right now." (present continuous)',
+   ans:'am',altAns:['Am'],
+   explain:'Present continuous = <b>am/is/are + verb-ing</b>. "I <b>am</b> reading" ✓. He is playing. They are sleeping. Used for actions happening NOW.'},
+
+  {kat:'grammar',lv:'3',cat:'📐 Grammar',catBg:'#e0faf0',catCl:'#0f7a48',lvTag:'lv3',lvLbl:'Advanced',
+   type:'pilihan',visual:'🤔',
+   q:'Which sentence is grammatically correct?',
+   choices:['Neither of the students was present.','Neither of the students were present.','Neither of the student was present.','Neither of the students is been present.'],ans:'Neither of the students was present.',
+   explain:'"Neither" is singular, so use singular verb: <b>was</b>. "Neither of the students <b>was</b> present." Similar: "Each of them IS...", "Everyone IS..."'},
+
+  // ══ READING - lv2 ══
+  {kat:'reading',lv:'2',cat:'👁️ Reading',catBg:'#fff0e4',catCl:'#c05000',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'📖',
+   q:'Read: "Budi woke up early. He brushed his teeth and ate breakfast. Then he went to school." What did Budi do FIRST?',
+   choices:['Woke up early','Brushed his teeth','Ate breakfast','Went to school'],ans:'Woke up early',
+   explain:'Sequence words help: FIRST he <b>woke up</b>, then brushed his teeth, then ate breakfast, then went to school. Reading tip: look for sequence words (first, then, next, finally).'},
+
+  {kat:'reading',lv:'2',cat:'👁️ Reading',catBg:'#fff0e4',catCl:'#c05000',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🌳',
+   q:'Read: "Trees are very important. They give us oxygen, food, and wood. They also prevent floods and provide homes for animals." What is the MAIN IDEA?',
+   choices:['Trees are important for many reasons.','Trees give us wood.','Animals live in trees.','Trees prevent floods.'],ans:'Trees are important for many reasons.',
+   explain:'The <b>main idea</b> = the most important point. The first sentence often states it: "Trees are very important." The other sentences are supporting details.'},
+
+  {kat:'reading',lv:'3',cat:'👁️ Reading',catBg:'#fff0e4',catCl:'#c05000',lvTag:'lv3',lvLbl:'Advanced',
+   type:'pilihan',visual:'📰',
+   q:'Read: "Despite the heavy rain, the football match continued." What does "despite" mean?',
+   choices:['Even though / Meskipun','Because of / Karena','Before / Sebelum','After / Sesudah'],ans:'Even though / Meskipun',
+   explain:'"<b>Despite</b>" / "in spite of" = meskipun / walaupun. Used to show contrast. "Despite the rain, they played." = "Meskipun hujan deras, mereka tetap bermain."'},
+
+  // ══ DAILY ENGLISH ══
+  {kat:'daily',lv:'1',cat:'💬 Daily English',catBg:'#f0e8ff',catCl:'#7c3aed',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'👋',
+   q:'How do you greet someone in the morning?',
+   choices:['Good morning!','Good night!','Good evening!','Goodbye!'],ans:'Good morning!',
+   explain:'Greetings by time: <b>Good morning</b> (pagi, 00-12), Good afternoon (siang, 12-18), Good evening (malam, 18+), Good night (saat mau tidur), Goodbye (saat pamit).'},
+
+  {kat:'daily',lv:'1',cat:'💬 Daily English',catBg:'#f0e8ff',catCl:'#7c3aed',lvTag:'lv1',lvLbl:'Beginner',
+   type:'isian',visual:'🙏',
+   q:'When someone gives you something, you say "Thank ___"',
+   ans:'you',altAns:['You'],
+   explain:'"Thank <b>you</b>!" = Terima kasih! Response: "You\'re welcome!" (sama-sama) or "No problem!" (tidak apa-apa).'},
+
+  {kat:'daily',lv:'1',cat:'💬 Daily English',catBg:'#f0e8ff',catCl:'#7c3aed',lvTag:'lv1',lvLbl:'Beginner',
+   type:'pilihan',visual:'🎂',
+   q:'What do you say on someone\'s birthday?',
+   choices:['Happy Birthday!','Good Luck!','Congratulations!','Get well soon!'],ans:'Happy Birthday!',
+   explain:'Wishes: <b>Happy Birthday!</b> (ulang tahun), Good Luck! (semoga berhasil), Congratulations! (selamat), Get well soon! (semoga cepat sembuh).'},
+
+  {kat:'daily',lv:'2',cat:'💬 Daily English',catBg:'#f0e8ff',catCl:'#7c3aed',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🤒',
+   q:'You feel sick and want to tell your teacher. What do you say?',
+   choices:['Excuse me, I don\'t feel well.','I am hungry.','May I go to eat?','I want to sleep.'],ans:'Excuse me, I don\'t feel well.',
+   explain:'When you\'re sick: "<b>Excuse me, I don\'t feel well.</b>" or "I have a stomachache / headache / fever." Always say "Excuse me" before interrupting!'},
+
+  {kat:'daily',lv:'2',cat:'💬 Daily English',catBg:'#f0e8ff',catCl:'#7c3aed',lvTag:'lv2',lvLbl:'Intermediate',
+   type:'pilihan',visual:'🧭',
+   q:'Someone asks: "Where is the library?" The correct answer is...',
+   choices:['It\'s next to the school office.','Yes, it is.','I am going there.','The library is big.'],ans:'It\'s next to the school office.',
+   explain:'Direction words: next to (di sebelah), in front of (di depan), behind (di belakang), between (di antara), across from (di seberang), near (dekat).'},
+
+  {kat:'daily',lv:'3',cat:'💬 Daily English',catBg:'#f0e8ff',catCl:'#7c3aed',lvTag:'lv3',lvLbl:'Advanced',
+   type:'pilihan',visual:'📞',
+   q:'You call a friend but someone else answers. What do you say?',
+   choices:['May I speak to Budi, please?','Is Budi there now?','Hello, where is Budi?','I want Budi.'],ans:'May I speak to Budi, please?',
+   explain:'Polite phone English: "<b>May I speak to [name], please?</b>" or "Could I speak with...?" Always use polite expressions on the phone. "May I" is more formal than "Can I".'},
+];
+
+/* ── STATE ── */
+var filterLevel='all', filterKat='semua';
+var qs=[], qi=0, benar=0, salah=0, streak=0, answered=false;
+
+function setFilter(type, val, el){
+  if(type==='level') filterLevel=val;
+  else filterKat=val;
+
+  if(type==='level'){
+    document.querySelectorAll('.lv').forEach(function(b){b.classList.remove('active');});
+  } else {
+    document.querySelectorAll('.cat').forEach(function(b){b.classList.remove('active');});
+  }
+  el.classList.add('active');
+  startQuiz();
+}
+
+function startQuiz(){
+  var pool=SOAL.filter(function(s){
+    var lvOk = filterLevel==='all' || s.lv===filterLevel;
+    var katOk = filterKat==='semua' || s.kat===filterKat;
+    return lvOk && katOk;
+  });
+  if(!pool.length) pool=SOAL;
+  qs=shuffle(pool.slice()).slice(0, Math.min(10, pool.length));
+  qi=0; benar=0; salah=0; streak=0;
+  updateSc();
+  renderQ();
+}
+
+function renderQ(){
+  var area=document.getElementById('quiz-area');
+  if(qi>=qs.length){renderResults();return;}
+  answered=false;
+  var q=qs[qi];
+  document.getElementById('sc-no').textContent=(qi+1)+'/'+qs.length;
+  document.getElementById('progBar').style.width=((qi/qs.length)*100+10)+'%';
+
+  var typePill=q.type==='pilihan'
+    ?'<span class="q-type-tag tag-pg">📋 Multiple Choice</span>'
+    :'<span class="q-type-tag tag-is">✏️ Fill in</span>';
+  var lvPill='<span class="lv-tag '+q.lvTag+'">'+q.lvLbl+'</span>';
+
+  var interactHtml='';
+  if(q.type==='pilihan'){
+    var ltrs=['A','B','C','D'], cls=['oa','ob','oc','od'];
+    var sc=shuffle(q.choices.slice());
+    interactHtml='<div class="options" id="opts-wrap" data-correct='+JSON.stringify(q.ans)+'>';
+    sc.forEach(function(c,i){
+      interactHtml+='<button class="opt '+cls[i]+'" data-ans='+JSON.stringify(c)+' onclick="checkOpt(this)">'
+        +'<span class="opt-ltr">'+ltrs[i]+'</span><span>'+c+'</span></button>';
+    });
+    interactHtml+='</div>';
+  } else {
+    interactHtml='<div class="isian-wrap">'
+      +'<div class="isian-hint">✏️ Type your answer below:</div>'
+      +'<div class="isian-row">'
+        +'<input type="text" id="isian-inp" placeholder="Your answer..." autocomplete="off" onkeydown="if(event.key===\'Enter\')checkIsian()">'
+        +'<button class="btn-cek" id="btn-cek" onclick="checkIsian()">Check ✓</button>'
+      +'</div></div>';
+  }
+
+  var visualHtml=q.visual?'<div class="q-visual'+(q.visual.length>4?' big':'')+'">'+q.visual+'</div>':'';
+
+  area.innerHTML=
+    '<div class="q-card">'
+      +'<div class="q-top">'
+        +'<span class="q-cat-tag" style="background:'+q.catBg+';color:'+q.catCl+'">'+q.cat+'</span>'
+        +'<div class="q-badges">'+lvPill+typePill+'</div>'
+      +'</div>'
+      +visualHtml
+      +'<div class="q-text">'+q.q+'</div>'
+    +'</div>'
+    +'<div id="fb" class="feedback"></div>'
+    +interactHtml
+    +'<div id="explain-box" class="explain-box"></div>'
+    +'<div class="nav-row">'
+      +'<button class="btn" onclick="showExplain()">💡 Explanation</button>'
+      +'<button class="btn" onclick="startQuiz()">🔄 Reset</button>'
+    +'</div>';
+
+  if(q.type==='isian') setTimeout(function(){var el=document.getElementById('isian-inp');if(el)el.focus();},80);
+}
+
+function showExplain(){
+  var q=qs[qi];
+  var box=document.getElementById('explain-box');
+  if(!box)return;
+  box.innerHTML='💡 '+q.explain;
+  box.classList.add('show');
+}
+
+function checkOpt(el){
+  if(answered)return;
+  answered=true;
+  var wrap=document.getElementById('opts-wrap');
+  var correct=wrap.getAttribute('data-correct');
+  var chosen=el.getAttribute('data-ans');
+  document.querySelectorAll('.opt').forEach(function(o){o.classList.add('locked');});
+  if(chosen===correct){
+    el.classList.add('correct');
+    handleBenar();
+  } else {
+    el.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(function(o){
+      if(o.getAttribute('data-ans')===correct) o.classList.add('correct');
+    });
+    handleSalah('❌ Wrong! Answer: '+correct);
+  }
+  var box=document.getElementById('explain-box');
+  if(box){box.innerHTML='💡 '+qs[qi].explain;box.classList.add('show');}
+  setTimeout(function(){qi++;renderQ();},2000);
+}
+
+function checkIsian(){
+  if(answered)return;
+  var inp=document.getElementById('isian-inp');
+  var btn=document.getElementById('btn-cek');
+  if(!inp||!btn)return;
+  var val=inp.value.trim().toLowerCase();
+  if(!val)return;
+  answered=true; btn.disabled=true;
+  var q=qs[qi];
+  var cor=q.ans.toLowerCase();
+  var alts=(q.altAns||[]).map(function(a){return a.toLowerCase();});
+  var ok=val===cor||alts.indexOf(val)>=0||cor.indexOf(val)>=0;
+  if(ok){
+    inp.classList.add('correct');
+    handleBenar();
+  } else {
+    inp.classList.add('wrong');
+    handleSalah('❌ Wrong! Answer: '+q.ans);
+  }
+  var box=document.getElementById('explain-box');
+  if(box){box.innerHTML='💡 '+q.explain;box.classList.add('show');}
+  setTimeout(function(){qi++;renderQ();},2200);
+}
+
+function handleBenar(){
+  benar++;streak++;updateSc();
+  var r=['Great! 🎉','Correct! ✨','Well done! 🌟','Excellent! 👏','Perfect! 🏆'];
+  showFB('✅ '+r[rand(0,r.length-1)]+(streak>=3?' 🔥 '+streak+' streak!':''),true);
+  if(streak>=3&&streak%3===0) showToast('🔥 '+streak+' correct in a row!');
+}
+
+function handleSalah(msg){
+  salah++;streak=0;updateSc();
+  showFB(msg,false);
+}
+
+function showFB(msg,ok){
+  var fb=document.getElementById('fb');
+  if(!fb)return;
+  fb.textContent=msg;
+  fb.className='feedback show '+(ok?'ok':'err');
+}
+
+function updateSc(){
+  document.getElementById('sc-benar').textContent=benar;
+  document.getElementById('sc-salah').textContent=salah;
+  document.getElementById('sc-streak').textContent=streak+'🔥';
+}
+
+function renderResults(){
+  var total=qs.length, pct=Math.round(benar/total*100);
+  var stars=pct>=90?'⭐⭐⭐':pct>=60?'⭐⭐':'⭐';
+  var g,d,e;
+  if(pct>=90){g='English Master! 🏆';d='Wow, your English is amazing!';e='🥳';}
+  else if(pct>=70){g='Great Job! 🌟';d='Almost perfect, keep it up!';e='😄';}
+  else if(pct>=50){g='Good Try! 👍';d='Not bad! Practice makes perfect.';e='😊';}
+  else{g='Keep Learning! 💪';d="Don't give up! Try again!";e='🤔';}
+
+  document.getElementById('quiz-area').innerHTML=
+    '<div class="results">'
+      +'<span class="result-emoji">'+e+'</span>'
+      +'<div class="stars-row">'+stars+'</div>'
+      +'<div class="result-score">'+pct+'%</div>'
+      +'<div class="result-grade">'+g+'</div>'
+      +'<div class="result-desc">'+d+'</div>'
+      +'<div class="breakdown">'
+        +'<div class="bd"><div class="bd-v" style="color:var(--green)">'+benar+'</div><div style="font-size:.7rem;color:var(--muted)">Correct</div></div>'
+        +'<div class="bd"><div class="bd-v" style="color:var(--red)">'+salah+'</div><div style="font-size:.7rem;color:var(--muted)">Wrong</div></div>'
+        +'<div class="bd"><div class="bd-v" style="color:var(--blue)">'+total+'</div><div style="font-size:.7rem;color:var(--muted)">Total</div></div>'
+      +'</div>'
+      +'<div class="nav-row" style="justify-content:center">'
+        +'<button class="btn primary" onclick="startQuiz()">🔄 Play Again</button>'
+      +'</div>'
+    +'</div>';
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2400);
+}
+
+startQuiz();
+</script>
+</body>
+</html>
