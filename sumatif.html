@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Kids SD 🌟 — Grade 1 Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #e8f4fd;
+  --bg2: #dbeafe;
+  --card: #ffffff;
+  --border: #93c5fd;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --blue-dark: #1d4ed8;
+  --yellow: #f59e0b;
+  --yellow-light: #fef3c7;
+  --yellow-dark: #d97706;
+  --green: #059669;
+  --green-light: #d1fae5;
+  --pink: #db2777;
+  --pink-light: #fce7f3;
+  --text: #1e3a5f;
+  --text2: #475569;
+  --muted: #94a3b8;
+  --correct: #059669;
+  --correct-bg: #d1fae5;
+  --wrong: #dc2626;
+  --wrong-bg: #fee2e2;
+  --shadow: 0 4px 24px rgba(37,99,235,.1);
+  --shadow-lg: 0 8px 40px rgba(37,99,235,.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* floating bubbles background */
+body::before {
+  content:'';
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(37,99,235,.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(245,158,11,.06) 0%, transparent 35%),
+    radial-gradient(circle at 80% 85%, rgba(5,150,105,.05) 0%, transparent 40%),
+    radial-gradient(circle at 5% 80%, rgba(219,39,119,.04) 0%, transparent 35%);
+}
+
+/* stars scattered decoration */
+body::after {
+  content: '⭐ 🌟 ✨ ⭐ 🌟 ✨ ⭐';
+  position: fixed; top: 0; left: 0; width: 100%;
+  font-size: 1.2rem; letter-spacing: 80px;
+  opacity: .08; pointer-events: none; z-index: 0;
+  padding: 8px;
+  white-space: nowrap; overflow: hidden;
+}
+
+/* rainbow top bar */
+.rainbow-top {
+  position:fixed; top:0; left:0; right:0; height:7px; z-index:100;
+  background: linear-gradient(90deg,
+    #2563eb, #06b6d4, #10b981, #f59e0b, #ef4444, #8b5cf6, #2563eb);
+  background-size: 300% 100%;
+  animation: rainbowShift 5s linear infinite;
+}
+@keyframes rainbowShift { from{background-position:0%} to{background-position:300%} }
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 60px;
+  position: relative; z-index: 1;
+}
+
+/* ── HEADER ── */
+header { text-align:center; margin-bottom:28px; padding-top:14px; }
+.header-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background: var(--blue); color:#fff;
+  font-size:.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  padding:5px 16px; border-radius:99px; margin-bottom:12px;
+  box-shadow: 0 4px 12px rgba(37,99,235,.35);
+}
+header h1 {
+  font-family:'Fredoka One',cursive; font-size:3rem;
+  color: var(--text); line-height:1.1;
+}
+header h1 span { color: var(--blue); }
+header h1 .star { color: var(--yellow); }
+header p { color:var(--text2); font-size:.88rem; margin-top:8px; font-weight:500; }
+
+/* ── SCOREBAR ── */
+.scorebar {
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--card); border:2.5px solid var(--border);
+  border-radius:20px; padding:14px 20px; margin-bottom:20px;
+  box-shadow: var(--shadow);
+}
+.sb-item { text-align:center; }
+.sb-val {
+  font-family:'Fredoka One',cursive; font-size:1.7rem; font-weight:400;
+  display:block; line-height:1;
+}
+.sb-lbl { font-size:.62rem; color:var(--muted); font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-top:2px; }
+.sb-val.green { color:var(--correct); }
+.sb-val.red   { color:var(--wrong); }
+.sb-val.gold  { color:var(--yellow-dark); }
+.sb-val.blue  { color:var(--blue); }
+
+/* ── TOPIC FILTER ── */
+.topic-wrap {
+  display:flex; gap:6px; justify-content:center;
+  margin-bottom:16px; flex-wrap:wrap;
+}
+.topic-btn {
+  padding:8px 16px; border-radius:99px;
+  border:2px solid var(--border); background:var(--card);
+  color:var(--text2); cursor:pointer;
+  font-family:'Poppins',sans-serif; font-size:.78rem; font-weight:700;
+  transition:all .18s; box-shadow: 0 2px 6px rgba(0,0,0,.04);
+}
+.topic-btn:hover { border-color:var(--blue); color:var(--blue); transform:translateY(-1px); }
+.topic-btn.active {
+  background:var(--blue); border-color:var(--blue); color:#fff;
+  box-shadow: 0 4px 14px rgba(37,99,235,.35);
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  background:var(--border); border-radius:99px;
+  height:10px; margin-bottom:20px; overflow:hidden;
+}
+.progress-fill {
+  height:100%;
+  background: linear-gradient(90deg, var(--blue), var(--yellow), var(--green));
+  border-radius:99px; transition:width .4s ease;
+}
+.progress-label {
+  display:flex; justify-content:space-between;
+  font-size:.72rem; color:var(--muted); font-weight:700;
+  margin-bottom:6px;
+}
+
+/* ── QUESTION CARD ── */
+.q-card {
+  background:var(--card); border:2.5px solid var(--border);
+  border-radius:28px; padding:28px 24px;
+  margin-bottom:14px; box-shadow:var(--shadow);
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+.q-meta {
+  display:flex; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap;
+}
+.q-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  background: var(--blue-light); color: var(--blue-dark);
+  font-size:.68rem; font-weight:800; letter-spacing:1px; text-transform:uppercase;
+  padding:4px 12px; border-radius:99px;
+}
+.q-subtopic {
+  font-size:.7rem; color:var(--muted); font-weight:700;
+  background:var(--bg2); padding:4px 10px; border-radius:99px;
+}
+.q-difficulty { font-size:.68rem; font-weight:800; padding:4px 12px; border-radius:99px; }
+.diff-easy   { background:#d1fae5; color:#065f46; }
+.diff-medium { background:#fef3c7; color:#92400e; }
+.diff-hard   { background:#fee2e2; color:#991b1b; }
+
+.q-emoji {
+  font-size:2.6rem; display:block; text-align:center;
+  margin-bottom:10px; animation:float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.q-context {
+  background: linear-gradient(135deg, var(--blue-light), #f0f9ff);
+  border-left:4px solid var(--blue);
+  border-radius:0 16px 16px 0; padding:12px 16px;
+  font-size:.86rem; color:var(--text2); line-height:1.8;
+  margin-bottom:14px; font-style:italic;
+}
+
+.q-text {
+  font-family:'Fredoka One',cursive; font-size:1.3rem; font-weight:400;
+  color:var(--text); line-height:1.5; text-align:center; margin-bottom:6px;
+}
+.q-hint-area {
+  min-height:22px; font-size:.8rem; color:var(--muted);
+  text-align:center; margin-top:4px; transition:color .2s;
+}
+.q-hint-area.shown { color:var(--yellow-dark); font-weight:700; }
+
+/* ── OPTIONS ── */
+.options {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px; margin-bottom:14px;
+}
+.option {
+  background:var(--bg); border:2.5px solid var(--border);
+  border-radius:16px; padding:14px 16px;
+  cursor:pointer; text-align:left;
+  font-family:'Poppins',sans-serif; font-size:.9rem; font-weight:600;
+  color:var(--text); transition:all .16s;
+  display:flex; align-items:center; gap:10px;
+}
+.option:hover:not(.disabled) {
+  border-color:var(--blue); background:var(--blue-light);
+  transform:translateY(-2px); box-shadow:0 6px 16px rgba(37,99,235,.2);
+}
+.opt-letter {
+  width:30px; height:30px; border-radius:10px; flex-shrink:0;
+  background:var(--border); color:var(--text2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.78rem; font-weight:800; transition:all .16s;
+  font-family:'Fredoka One',cursive;
+}
+.option:hover:not(.disabled) .opt-letter { background:var(--blue); color:#fff; }
+.option.correct { border-color:var(--correct); background:var(--correct-bg); }
+.option.correct .opt-letter { background:var(--correct); color:#fff; }
+.option.wrong   { border-color:var(--wrong); background:var(--wrong-bg); }
+.option.wrong   .opt-letter { background:var(--wrong); color:#fff; }
+.option.disabled { cursor:not-allowed; opacity:.7; }
+
+/* ── FEEDBACK ── */
+.feedback {
+  text-align:center; padding:12px 16px; border-radius:16px;
+  font-size:.9rem; font-weight:700; margin-bottom:12px;
+  opacity:0; transition:opacity .2s; display:none;
+}
+.feedback.show { opacity:1; display:block; }
+.feedback.correct { background:var(--correct-bg); color:var(--correct); border:2px solid rgba(5,150,105,.25); }
+.feedback.wrong   { background:var(--wrong-bg);   color:var(--wrong);   border:2px solid rgba(220,38,38,.2); }
+
+.explanation {
+  background: linear-gradient(135deg, var(--yellow-light), #fffbeb);
+  border:2px solid #fcd34d;
+  border-radius:14px; padding:10px 14px; margin-bottom:12px;
+  font-size:.82rem; color:#78350f; line-height:1.7; display:none;
+}
+.explanation.show { display:block; }
+.explanation strong { color:#92400e; }
+
+/* ── NAV ROW ── */
+.nav-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.btn {
+  padding:10px 22px; border-radius:12px;
+  border:2px solid var(--border); background:var(--card);
+  color:var(--text2); cursor:pointer;
+  font-family:'Poppins',sans-serif; font-size:.84rem; font-weight:700;
+  transition:all .16s; box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.btn:hover { border-color:var(--blue); color:var(--blue); }
+.btn.primary { background:var(--blue); border-color:var(--blue); color:#fff; box-shadow:0 4px 14px rgba(37,99,235,.35); }
+.btn.primary:hover { background:var(--blue-dark); }
+.btn.yellow { border-color:var(--yellow); color:var(--yellow-dark); }
+.btn.yellow:hover { background:var(--yellow-light); }
+
+/* ── SKIP BAR ── */
+.skip-bar {
+  height:5px; background:var(--border); border-radius:99px;
+  margin-top:12px; overflow:hidden; display:none;
+}
+.skip-fill {
+  height:100%; background: linear-gradient(90deg, var(--blue), var(--green));
+  border-radius:99px; transition:width .1s linear;
+}
+
+/* ── RESULTS ── */
+.results {
+  background:var(--card); border:2.5px solid var(--border);
+  border-radius:28px; padding:40px 24px; text-align:center;
+  box-shadow:var(--shadow-lg); animation:slideUp .4s ease;
+}
+.result-trophy { font-size:5rem; display:block; margin-bottom:8px; animation:float 3s ease-in-out infinite; }
+.result-score {
+  font-family:'Fredoka One',cursive; font-size:5rem; font-weight:400;
+  color:var(--blue); line-height:1;
+}
+.result-grade { font-family:'Fredoka One',cursive; font-size:1.8rem; font-weight:400; margin:8px 0; }
+.result-desc { color:var(--text2); font-size:.9rem; margin-bottom:24px; font-weight:500; }
+.result-breakdown {
+  display:flex; gap:14px; justify-content:center;
+  margin-bottom:24px; flex-wrap:wrap;
+}
+.rb-item {
+  background:var(--bg2); border:2.5px solid var(--border);
+  border-radius:16px; padding:12px 24px; text-align:center;
+}
+.rb-val { font-family:'Fredoka One',cursive; font-size:1.8rem; font-weight:400; }
+
+/* ── REVIEW TABLE ── */
+.review-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:.78rem; text-align:left; }
+.review-table th { background:var(--bg2); padding:8px 10px; font-weight:800; color:var(--text2); border-bottom:2px solid var(--border); }
+.review-table td { padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.6; }
+.rv-benar { color:var(--correct); font-weight:800; }
+.rv-salah { color:var(--wrong); font-weight:800; }
+
+/* ── STREAK TOAST ── */
+.streak-toast {
+  position:fixed; top:20px; right:16px; z-index:999;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+  color:#fff; font-weight:800;
+  padding:10px 20px; border-radius:14px; font-size:.84rem;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+  font-family:'Poppins',sans-serif;
+  box-shadow:0 6px 24px rgba(245,158,11,.5);
+}
+.streak-toast.show { opacity:1; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:500px) {
+  header h1 { font-size:2.2rem; }
+  .q-text { font-size:1.05rem; }
+  .options { grid-template-columns:1fr; }
+  .option { font-size:.84rem; }
+  .result-score { font-size:3.8rem; }
+  .scorebar { padding:10px 12px; }
+  .sb-val { font-size:1.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="rainbow-top"></div>
+<div class="streak-toast" id="streakToast"></div>
+<div class="container">
+
+  <header>
+    <div class="header-badge">🌍 Grade 1 · Semester 1 &amp; 2</div>
+    <h1>English<span>Kids</span> <span class="star">⭐</span></h1>
+    <p>50 Multiple Choice Questions · Fruits, Family, Grammar &amp; Reading</p>
+  </header>
+
+  <div class="scorebar">
+    <div class="sb-item"><span class="sb-val green" id="sc-correct">0</span><div class="sb-lbl">Correct</div></div>
+    <div class="sb-item"><span class="sb-val red"   id="sc-wrong">0</span><div class="sb-lbl">Wrong</div></div>
+    <div class="sb-item"><span class="sb-val gold"  id="sc-streak">0🔥</span><div class="sb-lbl">Streak</div></div>
+    <div class="sb-item"><span class="sb-val blue"  id="sc-no">1/50</span><div class="sb-lbl">Question</div></div>
+  </div>
+
+  <div class="topic-wrap" id="topicFilter">
+    <button class="topic-btn active" onclick="setTopic('All',this)">🌟 All</button>
+    <button class="topic-btn" onclick="setTopic('Like/Likes',this)">📝 Like/Likes</button>
+    <button class="topic-btn" onclick="setTopic('Fruits',this)">🍎 Fruits</button>
+    <button class="topic-btn" onclick="setTopic('Family',this)">👨‍👩‍👧 Family</button>
+    <button class="topic-btn" onclick="setTopic('School',this)">🎒 School</button>
+    <button class="topic-btn" onclick="setTopic('Reading',this)">📖 Reading</button>
+    <button class="topic-btn" onclick="setTopic('Spelling',this)">🔤 Spelling</button>
+  </div>
+
+  <div class="progress-label">
+    <span id="prog-label">Question 1 of 50</span>
+    <span id="prog-pct">2%</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressBar" style="width:2%"></div>
+  </div>
+
+  <div id="soal-area"></div>
+
+</div>
+
+<script>
+const ALL_SOAL = [
+
+  /* ══════════════ LIKE / LIKES (10) ══════════════ */
+  {em:'🍎', sub:'Like/Likes', diff:'easy',
+   q:'A: "What fruit do you ___?" B: "I like apple."',
+   opts:['likes','liked','like','liking'], ans:2,
+   p:'Use "like" with I / you / we / they. → "What fruit do you like?"'},
+
+  {em:'🍌', sub:'Like/Likes', diff:'easy',
+   q:'Dina ___ banana.',
+   opts:['like','liked','liking','likes'], ans:3,
+   p:'"Dina" is a girl (she), so use "likes". He/She/It → likes.'},
+
+  {em:'🍉', sub:'Like/Likes', diff:'easy',
+   q:'We ___ watermelon.',
+   opts:['likes','liked','like','liking'], ans:2,
+   p:'Use "like" with we. → "We like watermelon."'},
+
+  {em:'🍊', sub:'Like/Likes', diff:'easy',
+   q:'He ___ orange.',
+   opts:['like','liked','liking','likes'], ans:3,
+   p:'Use "likes" with he. → "He likes orange."'},
+
+  {em:'🥭', sub:'Like/Likes', diff:'easy',
+   q:'She ___ mango.',
+   opts:['like','likes','liked','liking'], ans:1,
+   p:'Use "likes" with she. → "She likes mango."'},
+
+  {em:'🥑', sub:'Like/Likes', diff:'easy',
+   q:'I ___ avocado.',
+   opts:['likes','like','liked','liking'], ans:1,
+   p:'Use "like" with I. → "I like avocado."'},
+
+  {em:'🍎', sub:'Like/Likes', diff:'easy',
+   q:'They ___ apple.',
+   opts:['likes','liked','like','liking'], ans:2,
+   p:'Use "like" with they. → "They like apple."'},
+
+  {em:'🥭', sub:'Like/Likes', diff:'medium',
+   q:'Hana ___ mango.',
+   opts:['like','liked','liking','likes'], ans:3,
+   p:'"Hana" is a girl (she). Use "likes". → "Hana likes mango."'},
+
+  {em:'🍍', sub:'Like/Likes', diff:'medium',
+   q:'Mita and Nana ___ pineapple.',
+   opts:['likes','like','liked','liking'], ans:1,
+   p:'"Mita and Nana" is plural (they). Use "like". → "Mita and Nana like pineapple."'},
+
+  {em:'🟡', sub:'Like/Likes', diff:'medium',
+   q:'Beni ___ durian.',
+   opts:['like','liked','likes','liking'], ans:2,
+   p:'"Beni" is a boy (he). Use "likes". → "Beni likes durian."'},
+
+  /* ══════════════ FRUITS (10) ══════════════ */
+  {em:'🍍', sub:'Fruits', diff:'easy',
+   ctx:'I like pineapple a lot. The pineapple is yellow on the inside. It grows on a plant close to the ground. It has leaves coming out of the top.',
+   q:'What color is the pineapple on the inside?',
+   opts:['Red','Green','Yellow','Purple'], ans:2,
+   p:'"The pineapple is yellow on the inside." — stated clearly in the text.'},
+
+  {em:'🍍', sub:'Fruits', diff:'easy',
+   ctx:'I like pineapple a lot. The pineapple is yellow on the inside. It grows on a plant close to the ground. It has leaves coming out of the top.',
+   q:'What is coming out of the top of the pineapple?',
+   opts:['The root','The skin','The seeds','The leaves'], ans:3,
+   p:'"It has leaves coming out of the top." — from the text.'},
+
+  {em:'🍍', sub:'Fruits', diff:'easy',
+   ctx:'I like pineapple a lot. The pineapple is yellow on the inside. It grows on a plant close to the ground. It has leaves coming out of the top.',
+   q:'The pineapple grows on a ___ close to the ground.',
+   opts:['tree','pot','plant','wall'], ans:2,
+   p:'"It grows on a plant close to the ground." — from the text.'},
+
+  {em:'🍍', sub:'Fruits', diff:'easy',
+   ctx:'I like pineapple a lot. The pineapple is yellow on the inside. It grows on a plant close to the ground. It has leaves coming out of the top.',
+   q:'What does the text talk about?',
+   opts:['An orange','An apple','A pineapple','A mango'], ans:2,
+   p:'The whole text describes a pineapple — its color, how it grows, and its leaves.'},
+
+  {em:'🍊', sub:'Fruits', diff:'easy',
+   q:'A: "Do you like orange?" (The answer is NO.) B: "___"',
+   opts:["No, I don't",'Yes, I do','Yes, I am','No, I am not'], ans:0,
+   p:'To say you do NOT like something: "No, I don\'t." (= No, I do not like it.)'},
+
+  {em:'🍇', sub:'Fruits', diff:'medium',
+   q:'A: "What fruit do you like?" B: "I like ___." (The picture shows a round dark-purple fruit.)',
+   opts:['Grape','Mangosteen','Melon','Pear'], ans:1,
+   p:'The round dark-purple fruit is a mangosteen. → "I like mangosteen."'},
+
+  {em:'🍇', sub:'Fruits', diff:'medium',
+   q:'G | ___ | a | p | e | ___ — The missing letters are ___',
+   opts:['s and r','r and s','a and s','r and n'], ans:1,
+   p:'"Grapes" = G-r-a-p-e-s. The 2nd letter is r and the 6th letter is s.'},
+
+  {em:'🟡', sub:'Fruits', diff:'easy',
+   q:'This is a ___ . (A large spiky fruit with a strong smell.)',
+   opts:['Melon','Avocado','Durian','Mango'], ans:2,
+   p:'A large spiky fruit with a strong smell is a durian (durian).'},
+
+  {em:'🍈', sub:'Fruits', diff:'medium',
+   q:'I like papaya. Which best describes papaya?',
+   opts:['Small and red','Long and yellow-green','Round and spiky','Small and purple'], ans:1,
+   p:'Papaya (pepaya) is a long, yellow-green fruit that is sweet and soft inside.'},
+
+  {em:'🍍', sub:'Fruits', diff:'medium',
+   q:'A: "Is this a pineapple?" B: "___ " (The picture shows a different fruit.)',
+   opts:['Yes, this is.','No, this not.','No, this is not.','Yes, it not.'], ans:2,
+   p:'When something is NOT a pineapple, say "No, this is not." ("this not" is incorrect grammar.)'},
+
+  /* ══════════════ FAMILY (8) ══════════════ */
+  {em:'👴👵', sub:'Family', diff:'easy',
+   q:'Mr. Widi is my grandfather. Mrs. Widya is my grandmother. They are my ___.',
+   opts:['Sister','Brothers','Grandparents','Parents'], ans:2,
+   p:'Grandfather + grandmother = grandparents. (kakek + nenek = kakek-nenek)'},
+
+  {em:'👩‍👧', sub:'Family', diff:'medium',
+   q:'My grandmother is Mrs. Ningsih. She is the mother of my ___.',
+   opts:['Mother','Sister','Brother','Friend'], ans:0,
+   p:'Your grandmother is the mother of your parent — your mother (or father).'},
+
+  {em:'👨', sub:'Family', diff:'easy',
+   q:'"Uncle" in Indonesian means ___.',
+   opts:['ayah','kakek','nenek','paman'], ans:3,
+   p:'Uncle = paman. Ayah = father, kakek = grandfather, nenek = grandmother.'},
+
+  {em:'👦', sub:'Family', diff:'easy',
+   q:'"Saudara laki-laki" in English is ___.',
+   opts:['Sister','Brother','Parents','Uncle'], ans:1,
+   p:'Saudara laki-laki = brother. Saudara perempuan = sister.'},
+
+  {em:'🧑', sub:'Family', diff:'easy',
+   q:'"___ is a student. His name is Ito." What word fills the blank?',
+   opts:['She','He','I','They'], ans:1,
+   p:'"His name" tells us it is a boy. Use "He" for a boy. → "He is a student."'},
+
+  {em:'💬', sub:'Family', diff:'easy',
+   ctx:'Nisa: "Who is the old man watching the television?" Ema: "He is my grandfather."',
+   q:'Who are the people talking in the dialogue?',
+   opts:['Nisa and Grandfather','Nisa and Ema','Ema and Grandfather','All three of them'], ans:1,
+   p:'Nisa asks and Ema answers — only Nisa and Ema speak. Grandfather is only mentioned.'},
+
+  {em:'📺', sub:'Family', diff:'easy',
+   ctx:'Nisa: "Who is the old man watching the television?" Ema: "He is my grandfather."',
+   q:'What are Nisa and Ema talking about?',
+   opts:['A television show','An old man watching TV',"Ema's grandfather",'School life'], ans:2,
+   p:"They are talking about Ema's grandfather — the old man watching television."},
+
+  {em:'👴', sub:'Family', diff:'medium',
+   ctx:'Nisa: "Who is the old man watching the television?" Ema: "He is my grandfather."',
+   q:'From the dialogue, we know that ___.',
+   opts:['The old man is sleeping','Ema has a grandfather','Nisa is watching TV','Ema is on television'], ans:1,
+   p:'Ema says "He is my grandfather" — so we know Ema has a grandfather.'},
+
+  /* ══════════════ SCHOOL / HAVE (7) ══════════════ */
+  {em:'✏️', sub:'School', diff:'easy',
+   q:'I ___ two pencils and two books.',
+   opts:['am','have','has','are'], ans:1,
+   p:'Use "have" with I. → "I have two pencils and two books."'},
+
+  {em:'🎒', sub:'School', diff:'easy',
+   q:'"I have a ___ ." (The picture shows a child with a school bag on their back.)',
+   opts:['Bag','Toy','Book','Ruler'], ans:0,
+   p:'The picture shows a bag (tas sekolah). → "I have a bag."'},
+
+  {em:'📏', sub:'School', diff:'easy',
+   q:'Ani: "Do you have a ruler?" Fara: "___ " (Fara does NOT have a ruler.)',
+   opts:["Yes, I do","No, I don't",'Yes, I am','No, I am not'], ans:1,
+   p:'"No, I don\'t." = No, I do not have a ruler. Use "do/don\'t" with have.'},
+
+  {em:'✏️', sub:'School', diff:'medium',
+   q:'"Saya memiliki delapan pensil" in English is ___.',
+   opts:['I am eight pencils','I have eight pencil','I have eight pencils','I has eight pencils'], ans:2,
+   p:'"Delapan" = eight. "Pensil" (plural) = pencils. Use "have" with I. → "I have eight pencils."'},
+
+  {em:'📚', sub:'School', diff:'easy',
+   q:'b – k – o – o — The correct arrangement is ___.',
+   opts:['book','boko','kobo','okob'], ans:0,
+   p:'Rearranging b-k-o-o: b-o-o-k = "book" (buku).'},
+
+  {em:'🐱', sub:'School', diff:'easy',
+   q:'Nino: "What do you have?" Rani: "I have a ___ ." (The picture shows a cat.)',
+   opts:['Turtle','Cat','Bird','Rabbit'], ans:1,
+   p:'The picture shows a cat. → "I have a cat."'},
+
+  {em:'🐰', sub:'School', diff:'easy',
+   q:'"I have three ___ ." (The picture shows three rabbits.)',
+   opts:['Cats','Chickens','Rabbits','Birds'], ans:2,
+   p:'The picture shows three rabbits. → "I have three rabbits."'},
+
+  /* ══════════════ READING (14) ══════════════ */
+
+  /* — Budi's Family Text — */
+  {em:'🍌', sub:'Reading', diff:'easy',
+   ctx:"Hi, I am Budi. I am seven years old. My family loves fruits. Every week, my father buys fresh fruits from the market. My favorite fruit is banana. My mother likes pineapple. My father enjoys eating oranges. My brother likes watermelon.",
+   q:"What is Budi's favorite fruit?",
+   opts:['Apple','Banana','Orange','Watermelon'], ans:1,
+   p:'"My favorite fruit is banana." — stated directly in the text.'},
+
+  {em:'📖', sub:'Reading', diff:'medium',
+   ctx:"Hi, I am Budi. I am seven years old. My family loves fruits. Every week, my father buys fresh fruits from the market. My favorite fruit is banana. My mother likes pineapple. My father enjoys eating oranges. My brother likes watermelon.",
+   q:'Which of the following is TRUE about Budi?',
+   opts:['Budi likes apple','Budi is seven years old','Budi likes orange','Budi is six years old'], ans:1,
+   p:'"I am seven years old." — Budi is seven years old. His favorite is banana, not apple or orange.'},
+
+  {em:'📖', sub:'Reading', diff:'medium',
+   ctx:"Hi, I am Budi. I am seven years old. My family loves fruits. Every week, my father buys fresh fruits from the market. My favorite fruit is banana. My mother likes pineapple. My father enjoys eating oranges. My brother likes watermelon.",
+   q:'What does the text about Budi talk about?',
+   opts:["Budi and his favorite toy","Budi's trip to the market","Budi's family and their favorite fruits","Budi's school life"], ans:2,
+   p:"The text introduces Budi and describes what fruits each family member likes."},
+
+  {em:'🍊', sub:'Reading', diff:'easy',
+   ctx:"Hi, I am Budi. I am seven years old. My family loves fruits. Every week, my father buys fresh fruits from the market. My favorite fruit is banana. My mother likes pineapple. My father enjoys eating oranges. My brother likes watermelon.",
+   q:"Which fruit does Budi's father enjoy eating?",
+   opts:['Pineapple','Watermelon','Orange','Banana'], ans:2,
+   p:'"My father enjoys eating oranges." — from the text.'},
+
+  /* — Lala / Strawberry Text — */
+  {em:'🍓', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Lala. My favorite fruit is strawberry. Strawberries are small and red. They grow on plants close to the ground. Strawberries are very good for us. They have lots of vitamins. I love to eat strawberries as a snack. We even make strawberry smoothies or strawberry jam.",
+   q:"What is Lala's favorite fruit?",
+   opts:['Orange','Apple','Strawberry','Mango'], ans:2,
+   p:'"My favorite fruit is strawberry." — first sentence of the text.'},
+
+  {em:'🍓', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Lala. My favorite fruit is strawberry. Strawberries are small and red. They grow on plants close to the ground. Strawberries are very good for us. They have lots of vitamins. I love to eat strawberries as a snack. We even make strawberry smoothies or strawberry jam.",
+   q:'What color are strawberries?',
+   opts:['Yellow','Purple','Green','Red'], ans:3,
+   p:'"Strawberries are small and red." — from the text.'},
+
+  {em:'🍓', sub:'Reading', diff:'medium',
+   ctx:"Hi, my name is Lala. My favorite fruit is strawberry. Strawberries are small and red. They grow on plants close to the ground. Strawberries are very good for us. They have lots of vitamins. I love to eat strawberries as a snack. We even make strawberry smoothies or strawberry jam.",
+   q:'Why are strawberries good for us?',
+   opts:['Because they are big','Because they have lots of vitamins','Because they taste sour','Because they grow on trees'], ans:1,
+   p:'"Strawberries are very good for us. They have lots of vitamins." — from the text.'},
+
+  {em:'🍓', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Lala. My favorite fruit is strawberry. Strawberries are small and red. They grow on plants close to the ground. Strawberries are very good for us. They have lots of vitamins. I love to eat strawberries as a snack. We even make strawberry smoothies or strawberry jam.",
+   q:'Where do strawberries grow?',
+   opts:['On tall trees','In the water','On plants close to the ground','In a flower pot'], ans:2,
+   p:'"They grow on plants close to the ground." — from the text.'},
+
+  {em:'🍓', sub:'Reading', diff:'medium',
+   ctx:"Hi, my name is Lala. My favorite fruit is strawberry. Strawberries are small and red. They grow on plants close to the ground. Strawberries are very good for us. They have lots of vitamins. I love to eat strawberries as a snack. We even make strawberry smoothies or strawberry jam.",
+   q:'What can we make with strawberries?',
+   opts:['Pizza and cake','Smoothies and jam','Cookies and bread','Rice and soup'], ans:1,
+   p:'"We even make strawberry smoothies or strawberry jam." — from the text.'},
+
+  /* — Maya Text — */
+  {em:'👧', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Maya. I am seven years old. I go to school at Star Primary School. I am in first grade. I really like fruit, especially mango. Every afternoon, my mother makes fruit juice for me. Eating fruit and drinking juice makes me healthy. I always feel good when I eat healthy food.",
+   q:'How old is Maya?',
+   opts:['Six years old','Eight years old','Seven years old','Ten years old'], ans:2,
+   p:'"I am seven years old." — stated in the first paragraph.'},
+
+  {em:'⭐', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Maya. I am seven years old. I go to school at Star Primary School. I am in first grade. I really like fruit, especially mango. Every afternoon, my mother makes fruit juice for me. Eating fruit and drinking juice makes me healthy. I always feel good when I eat healthy food.",
+   q:'Where does Maya go to school?',
+   opts:['Moon Primary School','Star Primary School','Sun Primary School','Rainbow Primary School'], ans:1,
+   p:'"I go to school at Star Primary School." — from the text.'},
+
+  {em:'🥭', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Maya. I am seven years old. I go to school at Star Primary School. I am in first grade. I really like fruit, especially mango. Every afternoon, my mother makes fruit juice for me. Eating fruit and drinking juice makes me healthy. I always feel good when I eat healthy food.",
+   q:'What fruit does Maya really like?',
+   opts:['Strawberry','Orange','Banana','Mango'], ans:3,
+   p:'"I really like fruit, especially mango." — from the text.'},
+
+  {em:'🥤', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Maya. I am seven years old. I go to school at Star Primary School. I am in first grade. I really like fruit, especially mango. Every afternoon, my mother makes fruit juice for me. Eating fruit and drinking juice makes me healthy. I always feel good when I eat healthy food.",
+   q:'Who makes fruit juice for Maya?',
+   opts:['Her father','Her brother','Her mother','Her teacher'], ans:2,
+   p:'"Every afternoon, my mother makes fruit juice for me." — from the text.'},
+
+  {em:'😊', sub:'Reading', diff:'easy',
+   ctx:"Hi, my name is Maya. I am seven years old. I go to school at Star Primary School. I am in first grade. I really like fruit, especially mango. Every afternoon, my mother makes fruit juice for me. Eating fruit and drinking juice makes me healthy. I always feel good when I eat healthy food.",
+   q:'How does Maya feel when she eats healthy food?',
+   opts:['She feels tired','She feels sick','She feels good','She feels bored'], ans:2,
+   p:'"I always feel good when I eat healthy food." — last sentence.'},
+
+  /* ══════════════ SPELLING (1) ══════════════ */
+  {em:'🔤', sub:'Spelling', diff:'medium',
+   q:'T | a | ___ | l | ___ — The missing letters are ___.',
+   opts:['b and e','p and e','b and l','r and e'], ans:0,
+   p:'"Table" = T-a-b-l-e. The 3rd letter is b and the 5th letter is e.'},
+
+];
+
+/* ═══════════════ STATE ═══════════════ */
+let pool = [], qIdx = 0, correct = 0, wrong = 0, streak = 0, answered = false;
+let currentQ = null, correctShuffled = 0;
+let currentTopic = 'All';
+let wrongLog = [];
+
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-.5); }
+function rand(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+
+function setTopic(t, el){
+  currentTopic = t;
+  document.querySelectorAll('.topic-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  startQuiz();
+}
+
+function startQuiz(){
+  let src = currentTopic === 'All' ? ALL_SOAL : ALL_SOAL.filter(s=>s.sub===currentTopic);
+  pool = shuffle(src);
+  qIdx = 0; correct = 0; wrong = 0; streak = 0; answered = false; wrongLog = [];
+  updateScore();
+  renderQuestion();
+}
+
+/* ═══════════════ RENDER ═══════════════ */
+function renderQuestion(){
+  const area = document.getElementById('soal-area');
+  if(qIdx >= pool.length){ renderResults(); return; }
+
+  answered = false;
+  currentQ = pool[qIdx];
+  const total = pool.length;
+  const pct = Math.round(((qIdx+1)/total)*100);
+
+  document.getElementById('sc-no').textContent = `${qIdx+1}/${total}`;
+  document.getElementById('prog-label').textContent = `Question ${qIdx+1} of ${total}`;
+  document.getElementById('prog-pct').textContent = pct+'%';
+  document.getElementById('progressBar').style.width = Math.max(pct,2)+'%';
+
+  const q = currentQ;
+  const diffClass = {easy:'diff-easy',medium:'diff-medium',hard:'diff-hard'}[q.diff]||'diff-easy';
+  const diffLabel = {easy:'Easy',medium:'Medium',hard:'HOTS'}[q.diff]||'Easy';
+  const letters = ['A','B','C','D'];
+
+  let opts = q.opts.map((o,i)=>({text:o,orig:i}));
+  opts = shuffle(opts);
+  correctShuffled = opts.findIndex(o=>o.orig===q.ans);
+
+  const ctxHtml = q.ctx ? `<div class="q-context">📄 ${q.ctx}</div>` : '';
+
+  area.innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <div class="q-badge">📚 ${q.sub}</div>
+        <div class="q-difficulty ${diffClass}">${diffLabel}</div>
+      </div>
+      <span class="q-emoji">${q.em}</span>
+      ${ctxHtml}
+      <div class="q-text">${q.q}</div>
+      <div class="q-hint-area" id="q-hint">💡 Click "Hint" if you need help</div>
+    </div>
+    <div id="feedback-box" class="feedback"></div>
+    <div id="explanation-box" class="explanation"></div>
+    <div class="options">
+      ${opts.map((o,i)=>`
+        <button class="option" onclick="checkAns(${i})" id="opt-${i}">
+          <div class="opt-letter">${letters[i]}</div>
+          <span>${o.text}</span>
+        </button>`).join('')}
+    </div>
+    <div class="skip-bar" id="skipBar"><div class="skip-fill" id="skipFill" style="width:0%"></div></div>
+    <div class="nav-row" style="margin-top:12px">
+      <button class="btn" onclick="showHint()">💡 Hint</button>
+      <button class="btn yellow" onclick="startQuiz()">🔄 Restart</button>
+    </div>
+  `;
+}
+
+function checkAns(idx){
+  if(answered) return;
+  answered = true;
+  const q = currentQ;
+  const btns = document.querySelectorAll('.option');
+  btns.forEach(b=>b.classList.add('disabled'));
+
+  const isCorrect = idx === correctShuffled;
+  if(isCorrect){
+    btns[idx].classList.add('correct');
+    correct++; streak++;
+    updateScore();
+    showFeedback(true);
+    if(streak > 0 && streak % 3 === 0) showStreakToast(`🔥 ${streak} correct in a row!`);
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[correctShuffled].classList.add('correct');
+    wrong++; streak = 0;
+    updateScore();
+    showFeedback(false);
+    wrongLog.push({no:qIdx+1, q:q.q, correct:q.opts[q.ans]});
+  }
+
+  const ex = document.getElementById('explanation-box');
+  ex.innerHTML = `<strong>📖 Explanation:</strong> ${q.p}`;
+  ex.classList.add('show');
+
+  animateSkip();
+}
+
+function animateSkip(){
+  const bar = document.getElementById('skipBar');
+  const fill = document.getElementById('skipFill');
+  if(!bar||!fill) return;
+  bar.style.display = 'block';
+  let pct = 0;
+  const iv = setInterval(()=>{
+    pct += 5;
+    fill.style.width = pct+'%';
+    if(pct >= 100){ clearInterval(iv); setTimeout(()=>{ qIdx++; renderQuestion(); },200); }
+  }, 110);
+}
+
+function showFeedback(ok){
+  const fb = document.getElementById('feedback-box');
+  if(!fb) return;
+  const msgs = ok
+    ? ['✅ Correct! Well done! 🌟','✅ Great answer! 👏','✅ Excellent! 🎉','✅ You are smart! 🏆','✅ Perfect! ⭐']
+    : ['❌ Not quite. Read the explanation below!','❌ Almost! Try to remember this one.','❌ Wrong answer. Check the explanation!'];
+  const streakStr = ok && streak >= 5 ? ` — Streak ${streak}🔥` : '';
+  fb.textContent = msgs[rand(0,msgs.length-1)] + streakStr;
+  fb.className = 'feedback show ' + (ok ? 'correct' : 'wrong');
+}
+
+function showHint(){
+  const hint = document.getElementById('q-hint');
+  if(!hint || !currentQ) return;
+  const hints = {
+    'Like/Likes':'💡 Rule: I/You/We/They → like. He/She/It/Name → likes.',
+    'Fruits':'💡 Read the text carefully, or think about the fruit\'s color and shape.',
+    'Family':'💡 Think: grandfather/grandmother = grandparents. Saudara laki-laki = brother.',
+    'School':'💡 I/You/We/They → have. He/She/It → has.',
+    'Reading':'💡 Find the answer by reading the passage. The clue is in the text!',
+    'Spelling':'💡 Say the word out loud, then count the letters one by one.',
+  };
+  hint.textContent = hints[currentQ.sub] || '💡 Read the question carefully and pick the best answer!';
+  hint.classList.add('shown');
+}
+
+function updateScore(){
+  document.getElementById('sc-correct').textContent = correct;
+  document.getElementById('sc-wrong').textContent = wrong;
+  document.getElementById('sc-streak').textContent = streak+'🔥';
+}
+
+function showStreakToast(msg){
+  const t = document.getElementById('streakToast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+/* ═══════════════ RESULTS ═══════════════ */
+function renderResults(){
+  const total = pool.length;
+  const pct = Math.round(correct/total*100);
+  let trophy, grade, desc;
+  if(pct>=90){trophy='🏆';grade='A+ Outstanding!';desc='Amazing! You mastered all the English topics!';}
+  else if(pct>=80){trophy='🌟';grade='A Very Good!';desc='Almost perfect. Keep up the great work!';}
+  else if(pct>=70){trophy='👍';grade='B Good Job!';desc='Good effort! Review the ones you missed.';}
+  else if(pct>=60){trophy='📚';grade='C Keep Trying!';desc='Keep studying and try again — you can do it!';}
+  else{trophy='💪';grade='D Keep Going!';desc='Don\'t give up! Practice makes perfect!';}
+
+  const wrongHTML = wrongLog.length > 0 ? `
+    <details style="margin-top:16px;text-align:left">
+      <summary style="cursor:pointer;font-weight:800;color:var(--wrong);font-size:.85rem;margin-bottom:8px">
+        ❌ ${wrongLog.length} wrong answer(s) — click to review
+      </summary>
+      <table class="review-table">
+        <thead><tr><th>#</th><th>Question</th><th>Correct Answer</th></tr></thead>
+        <tbody>${wrongLog.map(w=>`
+          <tr>
+            <td class="rv-salah">${w.no}</td>
+            <td>${w.q}</td>
+            <td class="rv-benar">${w.correct}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </details>` : `<p style="color:var(--correct);font-weight:800;margin-top:12px">🎉 Perfect score! All answers correct!</p>`;
+
+  document.getElementById('soal-area').innerHTML = `
+    <div class="results">
+      <span class="result-trophy">${trophy}</span>
+      <div style="font-size:.78rem;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">
+        Quiz Result · ${pool.length} Questions
+      </div>
+      <div class="result-score">${pct}%</div>
+      <div class="result-grade">${grade}</div>
+      <div class="result-desc">${desc}</div>
+      <div class="result-breakdown">
+        <div class="rb-item">
+          <div class="rb-val" style="color:var(--correct)">${correct}</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:700">Correct</div>
+        </div>
+        <div class="rb-item">
+          <div class="rb-val" style="color:var(--wrong)">${wrong}</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:700">Wrong</div>
+        </div>
+        <div class="rb-item">
+          <div class="rb-val" style="color:var(--blue)">${total}</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:700">Total</div>
+        </div>
+      </div>
+      ${wrongHTML}
+      <div class="nav-row" style="justify-content:center;margin-top:24px">
+        <button class="btn primary" onclick="startQuiz()">🔄 Play Again</button>
+      </div>
+    </div>`;
+
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('prog-pct').textContent = '100%';
+}
+
+/* ═══════════════ INIT ═══════════════ */
+startQuiz();
+</script>
+</body>
+</html>
